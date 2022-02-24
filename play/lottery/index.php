@@ -76,18 +76,65 @@ chdir($thisdir);
         chdir($thisdir);
         $chance = number_format(($userstake / $totalstake) * 100, 0);
         echo("<p>You just purchased " . $_POST['amount'] . " lottery tickets costing <img style='width:18;' src='https://neow.matthewevan.xyz/neowcoin.png'> " . $neowcoincost . ". With your " . $userstake . " lottery tickets, you have a " . $chance . "% chance of winning.  Good luck!</p>");
+        echo("<meta http-equiv='refresh' content='30;url=https://neow.matthewevan.xyz/play/lottery/' />");
         }
     ?>
 </form>
-<br><br>
+<p>The lottery is drawn every Monday at 9AM EST.</p>
 <?php
     $totalstake = fopen("totalstake", "r");
     $totalstake = fread($totalstake,filesize("totalstake"));
+    $userstake = fopen("stake/".$_SESSION['username'], "r");
+    $userstake = fread($userstake,filesize("stake/".$_SESSION['username']));   
+    $reward = $totalstake * 100;
 ?>
-<h2>Current Lottery Statisics</h2>
+<h2>Current Lottery Statistics</h2>
 <div style="text-align:left; max-width:500px; margin:0 auto;"> 
+    <p><strong>Jackpot</strong>: <img style='width:18;' src='https://neow.matthewevan.xyz/neowcoin.png'> <?php echo($reward); ?></p>
     <p><strong>Total Tickets in Stake</strong>: <?php echo($totalstake); ?></p>
-
+    <p><strong>Tickets You Own</strong>: <?php echo($userstake); ?></p>
+    <p><strong>Winning Chance</strong>: <?php echo(number_format(($userstake / $totalstake) * 100, 0)."%"); ?></p>
+    <table style="margin:0 auto; border:solid 1px black;">
+        <tr style="border-bottom: solid 1px black;">
+            <th>#</th>
+            <th>Stakeholders</th>
+            <th>Tickets</th>
+        </tr>
+        <?php
+        chdir("stake");
+        $stakeholders = array_diff(scandir(getcwd()), array('..', '.'));
+        foreach($stakeholders as $stakeholder) {
+            $shs = fopen($stakeholder, "r");
+            $shs = fread($shs, filesize($stakeholder));
+            $rankings[] = array("stakeholder" => $stakeholder, "stake" => $shs);
+        }
+        $columns = array_column($rankings, 'stake');
+        array_multisort($columns, SORT_DESC, $rankings);
+        $num = 1;
+        foreach ($rankings as $rank) {
+            echo("<tr><th>".$num."</th><th>".$rank['stakeholder']."</th><th>".$rank['stake']."</th></tr>");
+            $num++;
+        }
+        chdir("..");
+        ?>
+    </table>
+</div>
+<?php
+    $winner = fopen("winner", "r");
+    $winner = fread($winner, filesize("winner"));
+    $winnertickets = fopen("winnertickets", "r");
+    $winnertickets = fread($winnertickets, filesize("winnertickets"));
+    $prevstake = fopen("prevstake", "r");
+    $prevstake = fread($prevstake, filesize("prevstake"));
+    $finaljackpot = fopen("finaljackpot", "r");
+    $finaljackpot = fread($finaljackpot, filesize("finaljackpot"));       
+?>
+<h2>Previous Lottery Results</h2>
+<div style="text-align:left; max-width:500px; margin:0 auto;">
+<p><strong>Winner</strong>: <?php echo($winner); ?></p>
+<p><strong>Winner's Tickets Owned</strong>: <?php echo($winnertickets); ?></p>
+<p><strong>Total Tickets in Stake</strong>: <?php echo($prevstake); ?></p>
+<p><strong>Final Jackpot and Reward</strong>: <img style='width:18;' src='https://neow.matthewevan.xyz/neowcoin.png'> <?php echo($finaljackpot); ?></p>
 </div>
 </div>
 </body>

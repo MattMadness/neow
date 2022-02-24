@@ -13,7 +13,7 @@ padding:20px;
 font-size:20px;
 border:solid 2px purple;
 margin:2px;
-width:100px;
+width:150px;
 height:100px;
 text-decoration:none;
 }
@@ -31,5 +31,6 @@ background-color:rgb(0,0,0,0); border:solid; color:purple;
 <div id="everythingelse">
 <h1>neowgames</h1>
 <a href="dice"><div id="item">Dice</div></a>
+<a href="lottery"><div id="item">Lotto</div></a>
 <a href="adcoins"><div id="item">AdCoins</div></a>
 </html>

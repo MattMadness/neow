@@ -5,8 +5,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 } else {
     exit("Did you know you have to <em>log in</em> to play dice?");
 }
-
-
+$olddir = getcwd();
 chdir('..');
 chdir('..');
 chdir('user');
@@ -144,6 +143,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] <= $neowcoins and $_PO
                 echo(' neowcoins!<br><br>');
                 $oldneowcoins = fopen("neowcoins.txt", "w");
                 fwrite($oldneowcoins, $neowcoins);
+                //chdir($olddir);
+                //chdir("../lottery"); 
+                //$totalstake = fopen("totalstake", "r");
+                //$totalstake = fread($totalstake, filesize("totalstake"));
+                //$totalstake = $totalstake + number_format($_POST['bet'] / 100, 0);
+                //$oldtotalstake = fopen("totalstake", "w");
+                //fwrite($oldtotalstake, $totalstake + ($_POST['bet'] / 100));
+                //chdir($olddir);
         }
         echo('You now have '.$neowcoins.'');
         echo(' neowcoins!<br><br>');

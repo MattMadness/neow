@@ -1,6 +1,5 @@
 I'm your personal bank. Send me Neowcoins, to make Neowcoins.<br>
-<br>
 Interest: 1.5X<br>
 <br>
 Rules:<br>
-minimum out-take 1000 Newcoins, minimum take-out times per week 1, to take out type in /c/bank take out amount, rules can change
+minimum out-take Newcoins 10000, minimum take-out times per week 1, to take out type in /c/bank take out amount, rules can change
