@@ -1,20 +1,18 @@
 <?php
-include("sandman.php");
-?>
-<?php
-
 require_once 'config.php';
-$redirectlink = $_GET['redirect'];
+if(isset($_GET['redirect'])) {
+    $redirectlink = $_GET['redirect'];
+}
 
 // Define variables and initialize with empty values
-$username = $password = $seckey = "";
-$username_err = $password_err = $seckey_err = "";
+$username = $password = "";
+$username_err = $password_err = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Verify security key
-	//if($_POST["seckey"] != "IMAGINEIFIKEPTTHEPASSWORDSIN"){
+	//if($_POST["seckey"] != "wdIIneow2020"){
 	//    $seckey_err = "<br>Please enter a valid security key.";
 	//}
 
@@ -33,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Validate credentials
-    if(empty($username_err) && empty($password_err) ){
+    if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
         $sql = "SELECT username, password FROM neow.users WHERE username = ?";
 
@@ -44,7 +42,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Set parameters
             $param_username = $username;
 
-            // Attempt to execute the prepared statement if($stmt->execute()){
+            // Attempt to execute the prepared statement
+            if($stmt->execute()){
                 // Store result
                 $stmt->store_result();
 
@@ -61,7 +60,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION['loggedin'] = true;
                             $chat = fopen("sandmanconsole.php", "a");
                             $data="Login success by ".$_SERVER["REMOTE_ADDR"].' whose username is '. $username . ' on <strong>' . date("Y/m/d") . " " . date("h:i:sa") . "</strong><br>";
-                            fwrite($chat,$data); 
+                            fwrite($chat,$data);
                             fclose($chat);
                             chdir('user');
                             if(file_exists($username)){
@@ -89,7 +88,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $password_err = '<br>The password you entered was not valid.';
                             $chat = fopen("sandmanconsole.php", "a");
                             $data="Login failure by ".$_SERVER["REMOTE_ADDR"].' whose username is '. $username . ' on <strong>' . date("Y/m/d") . " " . date("h:i:sa") . "</strong><br>";
-                            fwrite($chat,$data); 
+                            fwrite($chat,$data);
                             fclose($chat);
                         }
                     }
@@ -102,9 +101,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
         }
 
+        // Close statement
+        //$stmt->close($stmt);
     }
 
-
+    // Close connection
+    //$mysqli->close($mysqli);
+}
 ?>
 
 <!DOCTYPE html>
