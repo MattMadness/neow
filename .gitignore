@@ -1,1 +1,4 @@
 config.php
+c/*/
+!c/DEFAULT/
+!c/DEFAULT/*
