@@ -28,5 +28,5 @@ Not really. I didn't make this website to be portable. It was my first PHP codin
 3. Start mysql
 4. Configure config.php with sql database settings
 5. Add entry to apache config so the website runs
-6. Pray to your God of your choosing
+6. Pray to a God of your choosing
 7. Start the apache web server.
