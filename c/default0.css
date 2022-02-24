@@ -1,0 +1,109 @@
+    body {
+      animation: colorchange 50s infinite; /* animation-name followed by duration in seconds*/
+         /* you could also use milliseconds (ms) or something like 2.5s */
+      -webkit-animation: colorchange 50s infinite; /* Chrome and Safari */
+    }
+
+    @keyframes colorchange
+    {
+      0%   {background: deeppink;}
+      25%  {background: purple;}
+      50%  {background: deeppink;}
+      75%  {background: purple;}
+      100% {background: deeppink;}
+    }
+
+    @-webkit-keyframes colorchange /* Safari and Chrome - necessary duplicate */
+    {
+      0%   {background: deeppink;}
+      25%  {background: purple;}
+      50%  {background: deeppink;}
+      75%  {background: purple;}
+      100% {background: deeppink;}
+    }
+body{margin:0; padding: 0; font-family: Tahoma, Geneva, sans-serif;  font-size: 14px; overflow: hidden;}
+*{font-family: Tahoma, Geneva, sans-serif; font-size: 14px; color:#e036ff; }
+.main{max-width:1024px; width:100%; margin:auto;}
+.header{background: background-color:#f0f0f0;}
+.header h1{max-width:1024px; width:100%; margin:0 auto; padding:10px 0; font-size: 20px; color: purple; text-align: center; font-weight: 300}
+.userscreen{margin: auto; text-align: center; margin-top: 24%}
+.input-user {
+  padding: 10px;
+  border: solid 2px #c9c9c9;
+  transition: border 0.3s;
+  width:80%;
+}
+.input-user:focus,
+.input-user.focus {
+  border: solid 2px #726da5;
+}
+
+.btn {
+        background-color:black;
+	border:solid 2px purple;
+	display:inline-block;
+	cursor:pointer;
+	color:844287;
+	font-family: Tahoma, Geneva, sans-serif; 
+	font-size:13px;
+	padding:6px 12px;
+	text-decoration:none;
+}
+.btn:hover {
+	background-color:#424242;
+        border:solid 2px #424242;
+}
+.btn:active {
+	position:relative;
+	top:2px;
+}
+
+.btn-user{padding:9px 30px; position: relative; top: 0px; font-size: 16px; font-weight: 300}
+
+#result{max-width:1024px; width:100%; padding:10px; background: black; max-height: 50%; overflow-y:auto; border:solid 2px purple; border-top:none; text-decoration: none;}
+
+#online{max-width:1024px; width:100%; padding:10px; background: black; overflow-y:auto; border:solid 2px purple; border-bottom:none; text-decoration: none;}
+
+#result::-webkit-scrollbar {
+	width: 20px;
+        border-radius:3px;
+	background-color:#1a1a1a;
+        margin:5px;
+}
+
+#result::-webkit-scrollbar-thumb {
+	background-color: purple;
+        border-radius:3px;
+        box-shadow:0 0 5px purple;
+}
+
+.chatcontrols{position: fixed; bottom: 0; width: 100%}
+.chatcontrols form{margin: 0}
+#chatbox 
+{
+    background: none repeat scroll 0 0 black;
+    border:solid 2px purple;
+    border-radius: 2px 2px 2px 2px;
+    color: white;
+    height: 35px;
+    margin-top: 10px;
+    outline: medium none;
+    padding: 10px 10px;
+    width: 65.5%;
+    height: 60px;
+    font-size: 20px;
+    font-weight: 300
+}
+#chatbox:focus{
+    border:none;
+    padding:8px 14px;
+    background: none repeat scroll 0 0 #424242;
+    border-color: #555;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3) inset;
+    color: white;
+ 	content:"";
+}
+
+.btn-send{font-size: 20px; padding: 15px; font-weight: 300}
+.btn-clear{padding: 15px 25px; font-size: 20px; font-weight: 300}
+.logout{float: right; color: #fff; text-decoration: none; font-size: 15px}

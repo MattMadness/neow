@@ -1,0 +1,57 @@
+html{background-color: #E6E6E6; color:purple;}
+body { font-family: "open sans",arial,sans-serif; }
+#heading { background-color:rgb(0,0,0,0);
+text-align:center;
+padding:10px;
+}
+#everythingelse {
+background-color:f7f7f7;
+margin-left:10px;
+margin-right:10px;
+border:10px;
+padding: 20px;
+text-align:center;
+overflow-x: hidden;
+overflow-y: visible;
+height:auto;
+box-shadow:0px 1px 20px grey;
+}
+#menu {
+display:inline-block;
+  border-radius: 25px;
+  padding: 8px;
+  border:solid 1px;
+  font-size:10;
+  text-decoration:none;
+}
+#menu:hover {
+background-color:#ff78ed;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+<!---
+202024
+844287
+---!>
