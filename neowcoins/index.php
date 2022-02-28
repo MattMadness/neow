@@ -17,6 +17,7 @@ $neowcoins = fread($neowcoins,filesize("neowcoins.txt"));
 <link rel="shortcut icon" href="https://neow.matthewevan.xyz/favicon.ico" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
 <link rel="stylesheet" href="https://neow.matthewevan.xyz/neowtheme.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 #forms {
 background-color:rgb(0,0,0,0); border:solid; color:purple;
@@ -52,7 +53,7 @@ $username = $_SESSION['username'];
 if($_SERVER["REQUEST_METHOD"] == "POST"){
         chdir('..');
         if(file_exists($_POST['recipient'])){
-                if($_POST['amount'] < $neowcoins and $_POST['amount'] > 0){
+                if($_POST['amount'] <= $neowcoins and $_POST['amount'] > 0){
                         chdir('..');
                         chdir('neowcoins');
                         $recipient = $_POST['recipient'];

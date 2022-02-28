@@ -1,7 +1,7 @@
 <?php
 if(isset($_POST['input'])){
-        if(strlen($_POST['input']) > 250){
-                die('Your bio may not exceed 250 characters.');
+        if(strlen($_POST['input']) > 1000){
+                die('Your bio may not exceed 1000 characters.');
         }
         session_start();
         $header = fopen("pageheader.php", "r");

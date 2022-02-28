@@ -52,7 +52,7 @@ chdir('/srv/disk15/2508703/www/neow.matthewevan.xyz/user/');
 chdir($username);
 if (file_exists("bio.txt")) {
         $myfile = fopen("bio.txt", "r") or die("Unable to open file!");
-        $content = fread($myfile,filesize("bio.txt"));
+        $content = preg_replace('/<br>/i',"",fread($myfile,filesize("bio.txt")));
         fclose($myfile);
 }
 ?>

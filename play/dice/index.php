@@ -12,24 +12,29 @@ chdir('user');
 chdir($_SESSION['username']);
 $neowcoins = fopen("neowcoins.txt", "r");
 $neowcoins = fread($neowcoins,filesize("neowcoins.txt"));
-//TODAY'S MULTIPLIER! MATTHEW'S EYES ONLY!!!
-//$multi = 2;
+
 $dice = 6;
 if(isset($_SESSION['multi'])){} else {
         $_SESSION['multi'] = 1;
 }
-if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] < $neowcoins and $_POST['bet'] > 0){
+if(isset($_SESSION['lossmulti'])){} else {
+        $_SESSION['lossmulti'] = 1;
+}
+if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] <= $neowcoins and $_POST['bet'] > 0){
         $dice = rand(1,6);
         $oldmulti = $_SESSION['multi'];
+        $oldlossmulti = $_SESSION['lossmulti'];
         if($_POST['hilo'] == true and $dice >= 4){
-                $_SESSION['multi'] = $_SESSION['multi'] + 1;
+                $_SESSION['multi']++;
+                $_SESSION['lossmulti'] = 1;
         } else if($_POST['hilo'] == false and $dice <= 3){
-                $_SESSION['multi'] = $_SESSION['multi'] + 1;
-        } else {
+                $_SESSION['multi']++;
+                $_SESSION['lossmulti'] = 1;
+       } else {
                 $_SESSION['multi'] = 1;
+                $_SESSION['lossmulti']++;
         }
 }
-//TODAY'S MULTIPLIER! MATTHEW'S EYES ONLY!!! $_POST['hilo'] == false and $dice <= 3
 ?>
 <html>
 <head>
@@ -38,6 +43,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] < $neowcoins and $_POS
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/3/w3.css">
 <link rel="stylesheet" href="https://neow.matthewevan.xyz/neowtheme.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv='refresh' content='60;url=https://neow.matthewevan.xyz/play/dice/' />
 </head>
 <body>
 <div id="heading"><br><a href="https://neow.matthewevan.xyz" ><img style="height:30;" src="https://neow.matthewevan.xyz/neow.png"></a>
@@ -118,39 +124,85 @@ input:checked + .slider:before {
 }
 </style>
 <h1>Dice</h1>
-<h5>Bet HI or LO to win neowcoins! Your next multiplier is x<?php echo($_SESSION['multi']);?>!</h5>
+<h5>Bet HI or LO to win neowcoins!</h5>
 <?php
+if($_SESSION['multi'] != 1){
+?>
+    <h5>Your next <span style="color:lime;">win</span> multiplier is x<?php echo($_SESSION['multi']);?>!</h5>
+<?php
+} else {
+?>
+    <h5>Your next <span style="color:red;">loss</span> multiplier is x<?php echo($_SESSION['lossmulti']);?>!</h5>
+<?php
+}
+function dicefunds($mod) {
+    $prevdir = getcwd();
+    chdir("../../play/dice/");
+    $funds = fopen("funds", "r");
+    $funds = fread($funds, filesize("funds"));
+    $funds = $funds + $mod;
+    if ($funds <= 0) {
+        $funds = 0;
+    }
+    $oldfunds = fopen("funds", "w");
+    fwrite($oldfunds, $funds);
+    chdir("stats");
+    $userstat = fopen($_SESSION['username'], "r");
+    $userstat = fread($userstat, filesize($_SESSION['username']));
+    $userstat = $userstat - $mod;
+    $olduserstat = fopen($_SESSION['username'], "w");
+    fwrite($olduserstat, $userstat);
+    chdir($prevdir);
+}
 if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] <= $neowcoins and $_POST['bet'] > 0){
         if($_POST['hilo'] == true and $dice >= 4){
-                $neowcoins = $neowcoins + ($_POST['bet'] * $oldmulti);
-                $neowcoins = round($neowcoins);
-                echo('You won ');
-                echo($_POST['bet'] * $oldmulti);
-                echo(' neowcoins!<br><br>');
-                $oldneowcoins = fopen("neowcoins.txt", "w");
-                fwrite($oldneowcoins, $neowcoins);
+                dicefunds((-1 * abs($_POST['bet'])) * $oldmulti);
+                $prevdir = getcwd();
+                chdir("../../play/dice/");
+                $funds = fopen("funds", "r");
+                $funds = fread($funds, filesize("funds"));
+                chdir("olddir");
+                if($funds <= 0){
+                    echo("<span style='color:red;'><strong>The casino is broke.</strong></span> Unable to reward neowcoins.<br><br>");
+                } else {
+                    $neowcoins = $neowcoins + ($_POST['bet'] * $oldmulti);
+                    $neowcoins = round($neowcoins);
+                    echo('You won ');
+                    echo($_POST['bet'] * $oldmulti);
+                    echo(' neowcoins!<br><br>');
+                    $oldneowcoins = fopen("neowcoins.txt", "w");
+                    fwrite($oldneowcoins, $neowcoins);
+                }
         } else if($_POST['hilo'] == false and $dice <= 3) {
-                $neowcoins = $neowcoins + ($_POST['bet'] * $oldmulti);
-                $neowcoins = round($neowcoins);
-                echo('You won ');
-                echo($_POST['bet'] * $oldmulti);
-                echo(' neowcoins!<br><br>');
-                $oldneowcoins = fopen("neowcoins.txt", "w");
-                fwrite($oldneowcoins, $neowcoins);
+                dicefunds((-1 * abs($_POST['bet'])) * $oldmulti);
+                $prevdir = getcwd();
+                chdir("../../play/dice/");
+                $funds = fopen("funds", "r");
+                $funds = fread($funds, filesize("funds"));
+                chdir("olddir");
+                if($funds <= 0){
+                    echo("<span style='color:red;'><strong>The casino is broke.</strong></span> Unable to reward neowcoins.<br><br>");
+                } else {
+                    $neowcoins = $neowcoins + ($_POST['bet'] * $oldmulti);
+                    $neowcoins = round($neowcoins);
+                    echo('You won ');
+                    echo($_POST['bet'] * $oldmulti);
+                    echo(' neowcoins!<br><br>');
+                    $oldneowcoins = fopen("neowcoins.txt", "w");
+                    fwrite($oldneowcoins, $neowcoins);
+                }
         } else {
-                $neowcoins = $neowcoins - ($_POST['bet']);
-                echo('You lost '.$_POST['bet'].'');
+                dicefunds($_POST['bet'] * $oldlossmulti);
+                $neowcoins = $neowcoins - ($_POST['bet'] * $oldlossmulti);
+                $neowcoins = round($neowcoins);
+                if($neowcoins <= 0){
+                    $neowcoins = 0;
+                    echo("<span style='color:red;'><strong>You're Broke!</strong></span> ");
+                }
+                echo('You lost '.$_POST['bet'] * $oldlossmulti.'');
                 echo(' neowcoins!<br><br>');
                 $oldneowcoins = fopen("neowcoins.txt", "w");
                 fwrite($oldneowcoins, $neowcoins);
-                //chdir($olddir);
-                //chdir("../lottery"); 
-                //$totalstake = fopen("totalstake", "r");
-                //$totalstake = fread($totalstake, filesize("totalstake"));
-                //$totalstake = $totalstake + number_format($_POST['bet'] / 100, 0);
-                //$oldtotalstake = fopen("totalstake", "w");
-                //fwrite($oldtotalstake, $totalstake + ($_POST['bet'] / 100));
-                //chdir($olddir);
         }
         echo('You now have '.$neowcoins.'');
         echo(' neowcoins!<br><br>');
@@ -171,7 +223,39 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] <= $neowcoins and $_PO
 <input type="number" name="bet" value="<?php echo($_POST['bet']); ?>">
 <button type="submit">Roll!</button>
 </form>
-<br>
+</div>
+<?php
+chdir($olddir);
+$funds = fopen("funds", "r");
+$funds = fread($funds, filesize("funds"));
+?>
+<h2>Dice Statistics</h2>
+<div style="text-align:left; max-width:500px; margin:0 auto;">
+    <p><strong>Casino Funds</strong>: <img style='width:18;' src='https://neow.matthewevan.xyz/neowcoin.png'> <?php echo($funds); ?></p>
+    <table style="margin:0 auto; border:solid 1px black;">
+        <tr style="border-bottom: solid 1px black;">
+            <th>#</th>
+            <th>Gambler</th>
+            <th>Earnings</th>
+        </tr>
+        <?php
+        chdir("stats");
+        $gamblers = array_diff(scandir(getcwd()), array('..', '.'));
+        foreach($gamblers as $gambler) {
+            $shs = fopen($gambler, "r");
+            $shs = fread($shs, filesize($gambler));
+            $rankings[] = array("gambler" => $gambler, "earnings" => $shs);
+        }
+        $columns = array_column($rankings, 'earnings');
+        array_multisort($columns, SORT_DESC, $rankings);
+        $num = 1;
+        foreach ($rankings as $rank) {
+            echo("<tr><th>".$num."</th><th>".$rank['gambler']."</th><th>".$rank['earnings']."</th></tr>");
+            $num++;
+        }
+        chdir("..");
+        ?>
+    </table>
 </div>
 <br><br>
 </div>

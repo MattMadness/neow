@@ -14,6 +14,7 @@ border-bottom:solid 5px purple;
 margin: 0 auto;
 width:100%;
 text-align:left;
+overflow:hidden;
 }
 #everythingelse{
 width:80%;

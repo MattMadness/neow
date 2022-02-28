@@ -29,7 +29,7 @@ text-align:left;
 <body>
 <div id="heading"><br><a href="https://neow.matthewevan.xyz" ><img style="height:30;" src="https://neow.matthewevan.xyz/neow.png"></a>
 
-<br></div><br>
+<br><br></div><br>
 <div id="everythingelse"><br><div id="nametag">
 <h1 style="font-size:30; overflow:auto;"><?php 
 error_reporting(0);
@@ -42,7 +42,7 @@ $last = array_key_last($part);
 echo($part[$last]);
 $neowcoins = fopen('neowcoins.txt', 'r');
 $neowcoins = fread($neowcoins,filesize("neowcoins.txt"));
-?><br><span style="color:#edfc33;"><img style="height:29;" src="https://neow.matthewevan.xyz/neowcoin.png"> <?php
+?><br><span style="color:yellow;"><img style="height:29;" src="https://neow.matthewevan.xyz/neowcoin.png"> <?php
 echo($neowcoins);
 ?></span></h1>
 </div>
@@ -50,4 +50,6 @@ echo($neowcoins);
 $bio = fopen('bio.txt', 'r');
 $bio = fread($bio, filesize('bio.txt'));
 echo $bio;
-?></p><title><?php echo($part[$last]); ?></title>
+?></p><title><?php echo($part[$last]); ?></title></div>
+</body>
+</html>

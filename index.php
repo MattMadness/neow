@@ -24,15 +24,25 @@ $items = count($items);
 <div id="everythingelse">
 <a id="menu" href="login.php">Login / Signup</a>
 <h1>Welcome to neow!</h1>
-<div style="padding:50px; background-image:url(https://www.cpomagazine.com/wp-content/uploads/2019/12/tim-berners-lee-launches-new-contract-for-the-web-to-create-a-better-internet_1500.jpg); background-size:cover;">
-<h2>Total User Count:</h2><span style="font-size:3em; color:red;"><?php echo($items - 6);?></span></div>
+<p>This is a handcrafted site with chat, bulletin board, currency (neowcoins), and mid-tier gambling (currently with a fun dice game and a lottery). It is Free Software, it's source code is available <a href="https://github.com/MattMadness/neow" target="_blank">here</a>.</p>
+<h2>Why Play</h2>
+<p>You should play because it's fun and does not affect your real-life wealth. </p>
+<h2>What are neowcoins</h2>
+<p>neowcoins are nothing more then a number in a text file on the web server. It's worthless, but that's what makes this game fun. You can gamble it, earn it, and lose it; you're not affected.</p>
+<p>The currency, neowcoins, cannot and should not be bought or sold because that way there are no real life implications of losing it.</p>
+<div style="padding:50px;">
+<h2>Total User Count:</h2><span style="font-size:3em; color:#E14242;"><?php echo($items - 6);?></span></div>
 <?php
 $items = scandir('c/'); // this will contain array of folders and files in folder "users"
 $items = count($items);
 $items = $items - 8;
 ?>
-<div style="padding:50px; background-image:url(https://blog.mozilla.org/internetcitizen/files/2016/12/connect-dots_cropped.jpg); background-size:cover;">
-<h2>Total neowchat Count:</h2><span style="font-size:3em; color:red;"><?php echo($items);?></span></div>
+<br>
+<div style="padding:50px;">
+<h2>Total neowchat Count:</h2><span style="font-size:3em; color:#E14242;"><?php echo($items);?></span>
+
+</div>
+
 </div>
 </body>
 </html>
