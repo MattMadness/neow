@@ -161,7 +161,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] <= $neowcoins and $_PO
                 chdir("../../play/dice/");
                 $funds = fopen("funds", "r");
                 $funds = fread($funds, filesize("funds"));
-                chdir("olddir");
+                chdir($olddir);
                 if($funds <= 0){
                     echo("<span style='color:red;'><strong>The casino is broke.</strong></span> Unable to reward neowcoins.<br><br>");
                 } else {
@@ -179,7 +179,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' and $_POST['bet'] <= $neowcoins and $_PO
                 chdir("../../play/dice/");
                 $funds = fopen("funds", "r");
                 $funds = fread($funds, filesize("funds"));
-                chdir("olddir");
+                chdir($olddir);
                 if($funds <= 0){
                     echo("<span style='color:red;'><strong>The casino is broke.</strong></span> Unable to reward neowcoins.<br><br>");
                 } else {
